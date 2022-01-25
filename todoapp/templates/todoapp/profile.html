@@ -1,0 +1,2798 @@
+{% extends 'todoapp/base.html'%}
+{% load static %}
+
+{% block css %}
+<!-- Datepicker -->
+<link rel="stylesheet" href="{% static 'vendors/datepicker/daterangepicker.css'%}">
+
+<!-- Prism -->
+<link rel="stylesheet" href="{% static 'vendors/prism/prism.css'%}" type="text/css">
+
+{% endblock%}
+
+
+{% block content %}
+
+
+<!-- begin::preloader-->
+<div class="preloader">
+    <div class="preloader-icon"></div>
+</div>
+<!-- end::preloader -->
+
+<!-- BEGIN: Sidebar Group -->
+<div class="sidebar-group">
+
+    <!-- BEGIN: User Menu -->
+    <div class="sidebar" id="user-menu">
+        <div class="py-4 text-center" data-backround-image="{% static 'assets/media/image/image1.jpg'%}">
+            {% if profile_pic.Img %}
+            <figure class="avatar avatar-lg mb-3 border-0">
+                <img src="{{profile_pic.Img.url}}" class="rounded-circle" alt="image">
+            </figure>
+            {% endif %}
+            <h5 class="d-flex align-items-center justify-content-center">{{profile_data.FullName}}</h5>
+            <div>
+                Balance: <strong>$500</strong>
+            </div>
+        </div>
+        <div class="card mb-0 card-body shadow-none">
+            <div class="mb-4">
+                <div class="list-group list-group-flush">
+                    <a href="profile.html" class="list-group-item p-l-r-0">Profile</a>
+                    <a href="#" class="list-group-item p-l-r-0 d-flex">Followers</a>
+                    <a href="mail.html" class="list-group-item p-l-r-0 d-flex">
+                        Inbox <span class="badge badge-danger ml-auto">2</span>
+                    </a>
+                    <a href="#" class="list-group-item p-l-r-0">Billing</a>
+                    <a href="#" class="list-group-item p-l-r-0" data-sidebar-target="#settings">Settings</a>
+                    <a href="{% url 'sign_out'%}" class="list-group-item p-l-r-0 text-danger">Sign Out!</a>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h6 class="d-flex justify-content-between">
+                    Completed Tasks
+                    <span class="float-right">%68</span>
+                </h6>
+                <div class="progress" style="height:5px;">
+                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 68%;" aria-valuenow="68"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h6 class="d-flex justify-content-between">
+                    Storage
+                    <span>%25</span>
+                </h6>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 40%;" aria-valuenow="40"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h6>About</h6>
+                <p class="text-muted mb-0">I love reading, traveling and discovering new things. You need to be happy in
+                    life.</p>
+            </div>
+            <div class="mb-4">
+                <h6>City</h6>
+                <p class="text-muted mb-0">Germany / Berlin</p>
+            </div>
+            <div class="mb-4">
+                <h6>Social Links</h6>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-sm btn-floating btn-facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-sm btn-floating btn-twitter">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-sm btn-floating btn-dribbble">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-sm btn-floating btn-whatsapp">
+                            <i class="fa fa-whatsapp"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-sm btn-floating btn-linkedin">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END: User Menu -->
+
+    <!-- BEGIN: Settings -->
+    <div class="sidebar" id="settings">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Settings</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item pl-0 pr-0">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                            <label class="custom-control-label" for="customSwitch1">Allow notifications.</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item pl-0 pr-0">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                            <label class="custom-control-label" for="customSwitch2">Hide user requests</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item pl-0 pr-0">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                            <label class="custom-control-label" for="customSwitch3">Speed up demands</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item pl-0 pr-0">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch4" checked>
+                            <label class="custom-control-label" for="customSwitch4">Hide menus</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item pl-0 pr-0">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch5">
+                            <label class="custom-control-label" for="customSwitch5">Remember next visits</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item pl-0 pr-0">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch6">
+                            <label class="custom-control-label" for="customSwitch6">Enable report
+                                generation.</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END: Settings -->
+
+</div>
+<!-- END: Sidebar Group -->
+
+<!-- begin::main -->
+<div class="layout-wrapper">
+
+    <!-- begin::header -->
+    <div class="header d-print-none">
+
+        <div class="header-left">
+            <div class="navigation-toggler">
+                <a href="#" data-action="navigation-toggler">
+                    <i data-feather="menu"></i>
+                </a>
+            </div>
+            <div class="header-logo">
+                <a href=index-2.html>
+                    <img class="logo" src="{% static 'assets/media/image/logo.png'%}" alt="logo">
+                    <img class="logo-light" src="{% static 'assets/media/image/logo-light.png'%}" alt="light logo">
+                </a>
+            </div>
+        </div>
+
+        <div class="header-body">
+            <div class="header-body-left">
+                <div class="page-title">
+                    
+                </div>
+            </div>
+            <div class="header-body-right">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a href="#" title="Language" class="nav-link" data-toggle="dropdown">
+                            <img width="18" src="{% static 'assets/media/image/flags/262-united-kingdom.png'%}"
+                                alt="flag" class="mr-2 rounded" title="United Kingdom"> EN
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">
+                                <img width="18" src="{% static 'assets/media/image/flags/003-tanzania.png'%}"
+                                    class="mr-2 rounded" alt="flag">
+                                Tanzania
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <img width="18" src="{% static 'assets/media/image/flags/261-china.png'%}"
+                                    class="mr-2 rounded" alt="flag"> China
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <img width="18" src="{% static 'assets/media/image/flags/013-tunisia.png'%}"
+                                    class="mr-2 rounded" alt="flag">
+                                Tunisia
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <img width="18" src="{% static 'assets/media/image/flags/044-spain.png'%}"
+                                    class="mr-2 rounded" alt="flag"> Spain
+                            </a>
+                        </div>
+                    </li>
+
+                    <!-- begin::header fullscreen -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" title="Fullscreen" data-toggle="fullscreen">
+                            <i class="maximize" data-feather="maximize"></i>
+                            <i class="minimize" data-feather="minimize"></i>
+                        </a>
+                    </li>
+                    <!-- end::header fullscreen -->
+
+                    <!-- begin::header search -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" title="Search" data-toggle="dropdown">
+                            <i data-feather="search"></i>
+                        </a>
+                        <div class="dropdown-menu p-2 dropdown-menu-right">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-prepend">
+                                        <button class="btn" type="button">
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <!-- end::header search -->
+
+                    <!-- begin::apps -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" title="Apps" data-toggle="dropdown">
+                            <i data-feather="box"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                            <div class="bg-dark p-4 text-center d-flex justify-content-between">
+                                <h5 class="mb-0">Apps</h5>
+                            </div>
+                            <div class="p-3">
+                                <div class="row row-xs">
+                                    <div class="col-6">
+                                        <a href="chat.html">
+                                            <div class="border-radius-1 text-center mb-3">
+                                                <figure class="avatar avatar-lg border-0">
+                                                    <span class="avatar-title bg-primary text-white rounded-circle">
+                                                        <i class="width-30 height-30" data-feather="message-circle"></i>
+                                                    </span>
+                                                </figure>
+                                                <div class="mt-2">Chat</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="mail.html">
+                                            <div class="border-radius-1 text-center mb-3">
+                                                <figure class="avatar avatar-lg border-0">
+                                                    <span class="avatar-title bg-secondary text-white rounded-circle">
+                                                        <i class="width-30 height-30" data-feather="mail"></i>
+                                                    </span>
+                                                </figure>
+                                                <div class="mt-2">Mail</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="todo-list.html">
+                                            <div class="border-radius-1 text-center">
+                                                <figure class="avatar avatar-lg border-0">
+                                                    <span class="avatar-title bg-info text-white rounded-circle">
+                                                        <i class="width-30 height-30" data-feather="check-circle"></i>
+                                                    </span>
+                                                </figure>
+                                                <div class="mt-2">Todo List</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="file-manager.html">
+                                            <div class="border-radius-1 text-center">
+                                                <figure class="avatar avatar-lg border-0">
+                                                    <span class="avatar-title bg-warning text-white rounded-circle">
+                                                        <i class="width-30 height-30" data-feather="file"></i>
+                                                    </span>
+                                                </figure>
+                                                <div class="mt-2">File Manager</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- end::apps -->
+
+                    <!-- begin::header messages dropdown -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link nav-link-notify  " title="Chats" data-toggle="modal" data-target="#chat_board">
+                            <i data-feather="message-circle"></i>
+                        </a>
+                        
+                    </li>
+                    <!-- end::header messages dropdown -->
+
+                    <!-- begin::header notification dropdown -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link nav-link-notify" title="Notifications" data-toggle="dropdown">
+                            <i data-feather="bell"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                            <div class="bg-dark p-4 text-center d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Notifications</h5>
+                                <small class="opacity-7">1 unread notifications</small>
+                            </div>
+                            <div>
+                                <ul class="list-group list-group-flush">
+                                    <li>
+                                        <a href="#" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                            <div>
+                                                <figure class="avatar mr-2">
+                                                    <span
+                                                        class="avatar-title bg-success-bright text-success rounded-circle">
+                                                        <i class="ti-user"></i>
+                                                    </span>
+                                                </figure>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                    New customer registered
+                                                    <i title="Mark as read" data-toggle="tooltip"
+                                                        class="hide-show-toggler-item fa fa-circle-o font-size-11"></i>
+                                                </p>
+                                                <span class="text-muted small">20 min ago</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="text-divider small pb-2 pl-3 pt-3">
+                                        <span>Old notifications</span>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                            <div>
+                                                <figure class="avatar mr-2">
+                                                    <span
+                                                        class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                                        <i class="ti-package"></i>
+                                                    </span>
+                                                </figure>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                    New Order Recieved
+                                                    <i title="Mark as unread" data-toggle="tooltip"
+                                                        class="hide-show-toggler-item fa fa-check font-size-11"></i>
+                                                </p>
+                                                <span class="text-muted small">45 sec ago</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                            <div>
+                                                <figure class="avatar mr-2">
+                                                    <span
+                                                        class="avatar-title bg-danger-bright text-danger rounded-circle">
+                                                        <i class="ti-server"></i>
+                                                    </span>
+                                                </figure>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                    Server Limit Reached!
+                                                    <i title="Mark as unread" data-toggle="tooltip"
+                                                        class="hide-show-toggler-item fa fa-check font-size-11"></i>
+                                                </p>
+                                                <span class="text-muted small">55 sec ago</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                            <div>
+                                                <figure class="avatar mr-2">
+                                                    <span class="avatar-title bg-info-bright text-info rounded-circle">
+                                                        <i class="ti-layers"></i>
+                                                    </span>
+                                                </figure>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <p
+                                                    class="mb-0 line-height-20 d-flex align-items-center justify-content-between">
+                                                    Apps are ready for update
+                                                    <i title="Mark as unread" data-toggle="tooltip"
+                                                        class="hide-show-toggler-item fa fa-check font-size-11"></i>
+                                                </p>
+                                                <span class="text-muted small">Yesterday</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="p-2 text-right border-top">
+                                <ul class="list-inline small">
+                                    <li class="list-inline-item mb-0">
+                                        <a href="#">Mark All Read</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- end::header notification dropdown -->
+
+                    <!-- BEGIN: Cart -->
+                    <li class="nav-item">
+                        <a href="#" title="Cart" class="nav-link" data-toggle="dropdown">
+                            <i data-feather="shopping-bag"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                            <div class="bg-dark p-4 text-center d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Cart</h5>
+                                <small class="opacity-7">3 products</small>
+                            </div>
+                            <div>
+                                <div class="list-group list-group-flush">
+                                    <a href="#" class="p-3 list-group-item d-flex">
+                                        <div>
+                                            <figure class="avatar mr-3">
+                                                <img src="{% static 'assets/media/image/products/product6.png'%}"
+                                                    alt="Canon 4000D 18-55 MM">
+                                            </figure>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                Canon 4000D 18-55 MM
+                                                <i title="Close" data-toggle="tooltip"
+                                                    class="hide-show-toggler-item ti-close"></i>
+                                            </p>
+                                            <span class="text-muted small">1 X $1,200</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="p-3 list-group-item d-flex">
+                                        <div>
+                                            <figure class="avatar mr-3">
+                                                <img src="{% static 'assets/media/image/products/product3.png'%}"
+                                                    alt="pineapple">
+                                            </figure>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                Snopy SN-BT96 Pretty
+                                                <i title="Close" data-toggle="tooltip"
+                                                    class="hide-show-toggler-item ti-close"></i>
+                                            </p>
+                                            <span class="text-muted small">1 X $250</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="p-3 list-group-item d-flex">
+                                        <div>
+                                            <figure class="avatar mr-3">
+                                                <img src="{% static 'assets/media/image/products/product7.png'%}"
+                                                    class="rounded" alt="pineapple">
+                                            </figure>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                Lenovo Tab E10 TB-X104F 32GB
+                                                <i title="Close" data-toggle="tooltip"
+                                                    class="hide-show-toggler-item ti-close"></i>
+                                            </p>
+                                            <span class="text-muted small">2 X $100</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-3 border-top text-right">
+                                <p class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>Sub Total</span>
+                                    <span>$1,650</span>
+                                </p>
+                                <p class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>Taxes</span>
+                                    <span>$15</span>
+                                </p>
+                                <p class="d-flex justify-content-between align-items-center mb-2 font-weight-bold">
+                                    <span>Total</span>
+                                    <span>$1,675</span>
+                                </p>
+                                <button class="btn btn-primary btn-block mt-2">
+                                    Order and Payment <i class="ti-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END: Cart -->
+
+                    <!-- begin::settings -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" title="Settings" data-sidebar-target="#settings">
+                            <i data-feather="settings"></i>
+                        </a>
+                    </li>
+                    <!-- end::settings -->
+
+                    <!-- begin::user menu -->
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" title="User menu" data-sidebar-target="#user-menu">
+                            <span class="mr-2 d-sm-inline d-none">{{profile_data.FullName}}</span>
+                            {% if profile_pic.Img %}
+                            <figure class="avatar avatar-sm">
+                                <img src="{{profile_pic.Img.url}}"
+                                    class="rounded-circle" alt="avatar">
+                            </figure>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <!-- end::user menu -->
+
+                </ul>
+
+                <!-- begin::mobile header toggler -->
+                <ul class="navbar-nav d-flex align-items-center">
+                    <li class="nav-item header-toggler">
+                        <a href="#" class="nav-link">
+                            <i data-feather="arrow-down"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- end::mobile header toggler -->
+            </div>
+        </div>
+
+    </div>
+    <!-- end::header -->
+
+    <div class="content-wrapper">
+
+        <!-- begin::navigation -->
+        <!-- 
+        <div class="navigation">
+            <div class="navigation-menu-tab">
+                <ul>
+                    <li>
+                        <a href="#" data-toggle="tooltip" data-placement="right" title="Ecommerce"
+                           data-nav-target="#ecommerce">
+                            <i data-feather="shopping-cart"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip" data-placement="right" title="Analytics"
+                           data-nav-target="#analytics">
+                            <i data-feather="activity"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip" data-placement="right" title="Projects"
+                           data-nav-target="#projects">
+                            <i data-feather="briefcase"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip"
+                           data-placement="right" title="Apps" data-nav-target="#apps">
+                            <i data-feather="globe"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip" data-placement="right" title="User"
+                           data-nav-target="#user">
+                            <i data-feather="users"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip"
+                           data-placement="right" title="Components"
+                           data-nav-target="#components">
+                            <i data-feather="layers"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip"
+                           data-placement="right" title="Forms"
+                           data-nav-target="#forms">
+                            <i data-feather="edit-3"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip"
+                           data-placement="right" title="Plugins"
+                           data-nav-target="#plugins">
+                            <i data-feather="gift"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="tooltip"
+                           data-placement="right" title="Pages" data-nav-target="#pages">
+                            <i data-feather="copy"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navigation-menu-body">
+                <div class="navigation-menu-group">
+                    <div id="ecommerce">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="shopping-cart"></i> E-commerce
+                            </li>
+                            <li>
+                                <a  href="ecommerce-dashboard.html">Dashboard</a></li>
+                            <li>
+                                <a  href="orders.html">Orders</a></li>
+                            <li>
+                                <a  href="product-list.html">Product List</a></li>
+                            <li>
+                                <a  href="product-grid.html">Product Grid</a></li>
+                            <li>
+                                <a  href="product-detail.html">Product Detail</a></li>
+                            <li class="navigation-divider">Summary</li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-3">
+                                <span class="avatar-title bg-warning rounded">
+                                    <i class="ti-bar-chart-alt"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6>Total Orders</h6>
+                                        <h4 class="mb-0 font-weight-bold">$50.958</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-3">
+                                <span class="avatar-title bg-success rounded">
+                                    <i class="ti-trash"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6>New Products</h6>
+                                        <h4 class="mb-0">100</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-3">
+                                <span class="avatar-title bg-danger rounded">
+                                    <i class="ti-reload"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6>Refund</h6>
+                                        <h4 class="mb-0">5.301</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="analytics">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="activity"></i> Analytics
+                            </li>
+                            <li>
+                                <a  href="analytics-dashboard.html">Dashboard</a></li>
+                            <li>
+                                <a  href="customers.html">Customers</a></li>
+                            <li class="navigation-divider">Summary</li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-2">
+                                <span class="avatar-title bg-warning rounded-circle">
+                                    <i class="ti-bar-chart-alt"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Total Sales</h6>
+                                        <p class="text-muted mb-0 small">This Mounth</p>
+                                        <h4 class="mb-0">$50.958</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-2">
+                                <span class="avatar-title bg-success rounded-circle">
+                                    <i class="ti-world"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Projects</h6>
+                                        <p class="text-muted mb-0 small">Today</p>
+                                        <h4 class="mb-0">35</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-2">
+                                <span class="avatar-title bg-info rounded-circle">
+                                    <i class="ti-user"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Total Visitor</h6>
+                                        <p class="text-muted mb-0 small">Today</p>
+                                        <h4 class="mb-0">5.301</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="projects">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="briefcase"></i> Projects
+                            </li>
+                            <li>
+                                <a  href="projects-dashboard.html">Dashboard</a></li>
+                            <li>
+                                <a  href="project-list.html">Project List</a></li>
+                            <li>
+                                <a  href="project-grid.html">Project Grid</a></li>
+                            <li>
+                                <a  href="project-detail.html">Project Detail</a></li>
+                            <li>
+                                <a  href="clients.html">Clients</a></li>
+                            <li class="navigation-divider">Summary</li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-2">
+                                <span class="avatar-title bg-warning rounded-circle">
+                                    <i class="ti-bar-chart-alt"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Total Sales</h6>
+                                        <p class="text-muted mb-0 small">This Mounth</p>
+                                        <h4 class="mb-0">$50.958</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-2">
+                                <span class="avatar-title bg-success rounded-circle">
+                                    <i class="ti-world"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Projects</h6>
+                                        <p class="text-muted mb-0 small">Today</p>
+                                        <h4 class="mb-0">35</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="d-flex align-items-start">
+                                    <div>
+                                        <figure class="avatar mr-2">
+                                <span class="avatar-title bg-info rounded-circle">
+                                    <i class="ti-user"></i>
+                                </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Total Visitor</h6>
+                                        <p class="text-muted mb-0 small">Today</p>
+                                        <h4 class="mb-0">5.301</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="apps">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="globe"></i> Apps
+                            </li>
+                            <li>
+                                <a  href="chat.html">
+                                    <span>Chat</span>
+                                    <span class="badge badge-danger">5</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="mail.html">
+                                    <span>Mail</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="todo-list.html">
+                                    <span>Todo List</span>
+                                    <span class="badge badge-warning">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="file-manager.html">
+                                    <span>File Manager</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="calendar.html">
+                                    <span>Calendar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="gallery.html">
+                                    <span>Gallery</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="invoice.html">Invoice</a></li>
+                            <li class="navigation-divider">Recent Contacts</li>
+                            <li>
+                                <div class="list-group list-group-flush">
+                                    <a href="#" class="list-group-item d-flex align-items-center">
+                                        <div>
+                                            <div class="avatar avatar-sm m-r-10">
+                                                <img src="{% static 'assets/media/image/user/man_avatar1.jpg'%}"
+                                                     class="rounded-circle" alt="image">
+                                            </div>
+                                        </div>
+                                        <span>Valentine Maton</span>
+                                    </a>
+                                    <a href="#" class="list-group-item d-flex align-items-center">
+                                        <div>
+                                            <div class="avatar avatar-sm m-r-10">
+                                                <img src="{% static 'assets/media/image/user/women_avatar2.jpg'%}"
+                                                     class="rounded-circle" alt="image">
+                                            </div>
+                                        </div>
+                                        <span>Holmes Cherryman</span>
+                                    </a>
+                                    <a href="#" class="list-group-item d-flex align-items-center">
+                                        <div>
+                                            <div class="avatar avatar-sm m-r-10">
+                                                <img src="{% static 'assets/media/image/user/women_avatar4.jpg'%}"
+                                                     class="rounded-circle" alt="image">
+                                            </div>
+                                        </div>
+                                        <span>Kenneth Hune</span>
+                                    </a>
+                                    <a href="#" class="list-group-item d-flex align-items-center">
+                                        <div>
+                                            <div class="avatar avatar-sm m-r-10">
+                                                <img src="{% static 'assets/media/image/user/women_avatar3.jpg'%}"
+                                                     class="rounded-circle" alt="image">
+                                            </div>
+                                        </div>
+                                        <span>Holmes Cherryman</span>
+                                    </a>
+                                    <a href="#" class="list-group-item d-flex align-items-center">
+                                        <div>
+                                            <div class="avatar avatar-sm m-r-10">
+                                                <img src="{% static 'assets/media/image/user/women_avatar5.jpg'%}"
+                                                     class="rounded-circle" alt="image">
+                                            </div>
+                                        </div>
+                                        <span>Kenneth Hune</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="user">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="users"></i> User
+                            </li>
+                            <li>
+                                <a  class="active"
+                                    href="profile.html">Profile</a></li>
+                            <li>
+                                <a  href="user-list.html">User List</a></li>
+                            <li>
+                                <a  href="user-edit.html">User Edit</a></li>
+                            <li><a href="login.html" target="_blank">Login</a></li>
+                            <li><a href="register.html" target="_blank">Register</a></li>
+                            <li><a href="recovery-password.html" target="_blank">Recovery Password</a>
+                            </li>
+                            <li><a href="lock-screen.html" target="_blank">Lock Screen</a></li>
+                            <li class="navigation-divider">Followers</li>
+                            <li>
+                                <div class="avatar-group ml-4">
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Krisha McAlees" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/women_avatar4.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Rozella Baskerfield" data-toggle="tooltip">
+                                            <span class="avatar-title bg-info rounded-circle">R</span>
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Hilton Dew" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/man_avatar3.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Mellie Smittoune" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/man_avatar1.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Avery Hampshire" data-toggle="tooltip">
+                                            <span class="avatar-title bg-warning rounded-circle">A</span>
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Krisha McAlees" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/women_avatar2.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Rozella Baskerfield" data-toggle="tooltip">
+                                            <span class="avatar-title bg-success rounded-circle">R</span>
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Other" data-toggle="tooltip">
+                                            <span class="avatar-title bg-dark rounded-circle">+5</span>
+                                        </a>
+                                    </figure>
+                                </div>
+                            </li>
+                            <li class="navigation-divider">Following</li>
+                            <li>
+                                <div class="avatar-group ml-4">
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Krisha McAlees" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/women_avatar5.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Darby Croci" data-toggle="tooltip">
+                                            <span class="avatar-title bg-danger rounded-circle">D</span>
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Hilton Dew" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/man_avatar5.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Mellie Smittoune" data-toggle="tooltip">
+                                            <img src="{% static 'assets/media/image/user/man_avatar2.jpg'%}" class="rounded-circle"
+                                                 alt="avatar">
+                                        </a>
+                                    </figure>
+                                    <figure class="avatar avatar-sm">
+                                        <a href="#" title="Mahalia Lemme" data-toggle="tooltip">
+                                            <span class="avatar-title bg-secondary rounded-circle">M</span>
+                                        </a>
+                                    </figure>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="components">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="layers"></i> Components
+                            </li>
+                            <li>
+                                <a href="#">Basic Components</a>
+                                <ul>
+                                    <li>
+                                        <a  href="alert.html">Alerts</a></li>
+                                    <li>
+                                        <a  href="accordion.html">Accordion</a></li>
+                                    <li>
+                                        <a  href="buttons.html">Buttons</a></li>
+                                    <li>
+                                        <a  href="dropdown.html">Dropdown</a></li>
+                                    <li>
+                                        <a  href="list-group.html">List Group</a></li>
+                                    <li>
+                                        <a  href="pagination.html">Pagination</a></li>
+                                    <li>
+                                        <a  href="typography.html">Typography</a></li>
+                                    <li>
+                                        <a  href="media-object.html">Media Object</a>
+                                    </li>
+                                    <li>
+                                        <a  href="progress.html">Progress</a></li>
+                                    <li>
+                                        <a  href="modal.html">Modal</a></li>
+                                    <li>
+                                        <a  href="spinners.html">Spinners</a></li>
+                                    <li>
+                                        <a  href="navs.html">Navs</a></li>
+                                    <li>
+                                        <a  href="tab.html">Tab</a></li>
+                                    <li>
+                                        <a  href="tooltip.html">Tooltip</a></li>
+                                    <li>
+                                        <a  href="popovers.html">Popovers</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Cards</a>
+                                <ul>
+                                    <li>
+                                        <a  href="basic-cards.html">Basic Cards </a></li>
+                                    <li>
+                                        <a  href="image-cards.html">Image Cards </a></li>
+                                    <li>
+                                        <a  href="scroll-cards.html">Scroll Cards </a></li>
+                                    <li>
+                                        <a  href="other-cards.html">Others Cards</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Tables</a>
+                                <ul>
+                                    <li>
+                                        <a  href="basic-tables.html">Basic Tables</a></li>
+                                    <li>
+                                        <a  href="dataTable.html">Datatable</a></li>
+                                    <li>
+                                        <a  href="responsive-tables.html">Responsive Tables</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Charts</a>
+                                <ul>
+                                    <li>
+                                        <a  href="apexchart.html">Apex Chart</a></li>
+                                    <li>
+                                        <a  href="chartjs.html">Chartjs</a></li>
+                                    <li>
+                                        <a  href="justgage.html">Justgage</a></li>
+                                    <li>
+                                        <a  href="morsis.html">Morsis</a></li>
+                                    <li>
+                                        <a  href="peity.html">Peity</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Maps</a>
+                                <ul>
+                                    <li>
+                                        <a  href="google-map.html">Google Map</a></li>
+                                    <li>
+                                        <a  href="vector-map.html">Vector Map</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a  href="avatar.html">Avatar</a></li>
+                            <li>
+                                <a  href="icons.html">Icons</a></li>
+                            <li>
+                                <a  href="colors.html">Colors</a></li>
+                        </ul>
+                    </div>
+                    <div id="forms">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="edit-3"></i> Forms
+                            </li>
+                            <li>
+                                <a  href="basic-forms.html">Basic Forms</a></li>
+                            <li>
+                                <a  href="custom-forms.html">Custom Forms</a></li>
+                            <li>
+                                <a  href="advanced-forms.html">Advanced Forms</a></li>
+                            <li>
+                                <a  href="form-validation.html">Form Validation</a></li>
+                            <li>
+                                <a  href="form-wizard.html">Form Wizard</a></li>
+                            <li>
+                                <a  href="file-upload.html">File Upload</a></li>
+                            <li>
+                                <a  href="datepicker.html">Datepicker</a></li>
+                            <li>
+                                <a  href="timepicker.html">Timepicker</a></li>
+                            <li>
+                                <a  href="colorpicker.html">Colorpicker</a></li>
+                        </ul>
+                    </div>
+                    <div id="plugins">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="gift"></i> Plugins
+                            </li>
+                            <li>
+                                <a  href="sweet-alert.html">Sweet Alert</a></li>
+                            <li>
+                                <a  href="lightbox.html">Lightbox</a></li>
+                            <li>
+                                <a  href="toast.html">Toast</a></li>
+                            <li>
+                                <a  href="tour.html">Tour</a></li>
+                            <li>
+                                <a  href="slick-slide.html">Slick Slide</a></li>
+                            <li>
+                                <a  href="nestable.html">Nestable</a></li>
+                        </ul>
+                    </div>
+                    <div id="pages">
+                        <ul>
+                            <li class="navigation-divider d-flex align-items-center">
+                                <i class="mr-2" data-feather="copy"></i> Pages
+                            </li>
+                            <li>
+                                <a  href="timeline.html">Timeline</a></li>
+                            <li>
+                                <a  href="pricing-table.html">Pricing Table</a></li>
+
+                            <li>
+                                <a  href="pricing-table-2.html">Pricing Table 2</a></li>
+                            <li>
+                                <a  href="search-result.html">Search Result</a></li>
+                            <li>
+                                <a  href="mailing.html">Mailing</a></li>
+                            <li>
+                                <a href="#">Error Pages</a>
+                                <ul>
+                                    <li><a href="404.html" target="_blank">404</a></li>
+                                    <li><a href="503.html" target="_blank">503</a></li>
+                                    <li><a href="mean-at-work.html" target="_blank">Mean at
+                                            Work</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a  href="blank-page.html">Blank Page</a>
+                            </li>
+                            <li>
+                                <a href="#">Menu Level</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Menu Level</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Menu Level </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- end::navigation -->
+
+        <div class="content-body">
+
+            <div class="content pl-3 mt-3">
+
+
+                <div class="page-header">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">User</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="row pl-2">
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <div class="card">
+                                    <img src="{% static 'assets/media/image/image1.jpg'%}" class="card-img-top"
+                                        alt="...">
+                                    <div class="card-body text-center m-t-70-minus">
+                                        <figure class="avatar avatar-xl m-b-20" style="position: relative;">
+                                            {% if profile_pic.Img %}    
+                                                <img src="{{profile_pic.Img.url}}"
+                                                    class="rounded-circle" alt="...">
+                                            {% endif %}
+                                                <a data-target="#upload_model" data-toggle="modal" class="btn btn-primary rounded-circle p-2 text-white"
+                                                style="width:35px;height:35px;position: absolute; bottom: 0%; right: -5px;"><i
+                                                class="mr-2" data-feather="edit-2"></i></a>
+                        
+
+                                        </figure>
+
+                                        <h5>{{profile_data.FullName}}</h5>
+                                        <p class="text-muted">Web Developer</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
+                                            repudiandae eveniet
+                                            harum.</p>
+
+                                    </div>
+                                    <hr class="m-0">
+                                    <div class="card-body">
+                                        <div class="row text-center">
+                                            <div class="col-4 text-info">
+                                                <h4 class="font-weight-bold">291</h4>
+                                                <span>Post</span>
+                                            </div>
+                                            <div class="col-4 text-success">
+                                                <h4 class="font-weight-bold">10.596</h4>
+                                                <span>Followers</span>
+                                            </div>
+                                            <div class="col-4 text-warning">
+                                                <h4 class="font-weight-bold">7.896</h4>
+                                                <span>Likes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title d-flex justify-content-between align-items-center">
+                                            Information
+                                            <a href="#" class="btn btn-outline-light btn-sm">
+                                                <i data-feather="edit-2" class="mr-2"></i> Edit
+                                            </a>
+                                        </h6>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">First Name:</div>
+                                            <div class="col-6">Johnatan</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">Last Name:</div>
+                                            <div class="col-6">Due</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">Age:</div>
+                                            <div class="col-6">26</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">Position:</div>
+                                            <div class="col-6">Web Designer</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">City:</div>
+                                            <div class="col-6">New York, USA</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">Address:</div>
+                                            <div class="col-6">228 Park Ave Str.</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">Phone:</div>
+                                            <div class="col-6">+1-202-555-0134</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-6 text-muted">Email:</div>
+                                            <div class="col-6">johndue@gmail.com</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title d-flex justify-content-between align-items-center">
+                                            Photos
+                                            <a href="#" class="btn btn-outline-light btn-sm">
+                                                <i data-feather="upload" class="mr-2"></i> Upload
+                                            </a>
+                                        </h6>
+                                        <div class="row row-xs">
+                                            <div class="col-lg-4 mb-3">
+                                                <img class="img-fluid rounded"
+                                                    src="{% static 'assets/media/image/portfolio-one.jpg'%}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <img class="img-fluid rounded"
+                                                    src="{% static 'assets/media/image/portfolio-two.jpg'%}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <img class="img-fluid rounded"
+                                                    src="{% static 'assets/media/image/portfolio-three.jpg'%}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <img class="img-fluid rounded"
+                                                    src="{% static 'assets/media/image/portfolio-four.jpg'%}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <img class="img-fluid rounded"
+                                                    src="{% static 'assets/media/image/portfolio-five.jpg'%}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <img class="img-fluid rounded"
+                                                    src="{% static 'assets/media/image/portfolio-six.jpg'%}"
+                                                    alt="image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Skills</h6>
+                                        <div class="mb-4">
+                                            <div class="text-muted mb-2">
+                                                <div
+                                                    class="icon-block icon-block-sm icon-block-floating icon-block-outline-primary text-primary m-r-10">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <span class="text-uppercase font-size-11">Graphic Design</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress flex-grow-1" style="height: 5px">
+                                                    <div class="progress-bar bg-primary" role="progressbar"
+                                                        style="width: 42%;" aria-valuenow="42" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <span class="h6 mb-0 ml-3">42%</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="text-muted mb-2">
+                                                <div
+                                                    class="icon-block icon-block-sm icon-block-floating icon-block-outline-danger text-danger m-r-10">
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <span class="text-uppercase font-size-11">Web Design</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress flex-grow-1" style="height: 5px">
+                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                        style="width: 75%;" aria-valuenow="75" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <span class="h6 mb-0 ml-3">75%</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="text-muted mb-2">
+                                                <div
+                                                    class="icon-block icon-block-sm icon-block-floating icon-block-outline-warning text-warning m-r-10">
+                                                    <i class="fa fa-bar-chart"></i>
+                                                </div>
+                                                <span class="text-uppercase font-size-11">Software</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress flex-grow-1" style="height: 5px">
+                                                    <div class="progress-bar bg-warning" role="progressbar"
+                                                        style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <span class="h6 mb-0 ml-3">50%</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="text-muted mb-2">
+                                                <div
+                                                    class="icon-block icon-block-sm icon-block-floating icon-block-outline-success text-success m-r-10">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                </div>
+                                                <span class="text-uppercase font-size-11">Contact Management</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress flex-grow-1" style="height: 7px">
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                        style="width: 22%;" aria-valuenow="22" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <span class="h6 mb-0 ml-3">22%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-8">
+
+                                <div class="card">
+
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        <ul class="nav nav-pills flex-column flex-sm-row" id="myTab" role="tablist">
+                                            <li class="flex-sm-fill text-sm-center nav-item">
+                                                <a class="nav-link active" id="timeline-tab" data-toggle="tab"
+                                                    href="#timeline" role="tab" aria-selected="true">My TODO</a>
+                                            </li>
+                                            <li class="flex-sm-fill text-sm-center nav-item">
+                                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home"
+                                                    role="tab" aria-selected="true">Profile settings</a>
+                                            </li>
+                                            <li class="flex-sm-fill text-sm-center nav-item">
+                                                <a class="nav-link" id="connections-tab1" data-toggle="tab"
+                                                    href="#connections" role="tab" aria-selected="false">
+                                                    Connections <span class="badge badge-light m-l-5">6</span>
+                                                </a>
+                                            </li>
+                                            <li class="flex-sm-fill text-sm-center nav-item">
+                                                <a class="nav-link" id="earnings-tab" data-toggle="tab" href="#earnings"
+                                                    role="tab" aria-selected="false">Earnings</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show" id="home" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-12 mb-3">
+                                                <div class="nav flex-lg-column flex-sm-row nav-pills" id="v-pills-tab"
+                                                    role="tablist" aria-orientation="vertical">
+                                                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill"
+                                                        href="#v-pills-home" role="tab" aria-controls="v-pills-home"
+                                                        aria-selected="true">Account</a>
+                                                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill"
+                                                        href="#v-pills-messages" role="tab"
+                                                        aria-controls="v-pills-messages"
+                                                        aria-selected="false">Security</a>
+                                                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill"
+                                                        href="#v-pills-settings" role="tab"
+                                                        aria-controls="v-pills-settings"
+                                                        aria-selected="false">Social</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-12">
+                                                <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-pane fade show active" id="v-pills-home"
+                                                        role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">Account</h6>
+                                                                <form action="{% url 'profile_update'%}" method="post" class="profile_form needs-validation" novalidate >
+                                                                    {% csrf_token %}
+
+                                                                    <div class="form-row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-label-group">
+                                                                                        <input type="text" class="form-control" placeholder="Name"
+                                                                                            name="fname"
+                                                                                            value="{{profile_data.FullName}}" required>
+                                                                                        <label for="validationCustom01">Name</label>
+                                                                                        <div class="invalid-feedback">
+                                                                                            please enter Full name
+                                                                                          </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-label-group">
+                                                                                        <input type="text" class="form-control"
+                                                                                        placeholder="Birth Date"
+                                                                                        
+                                                                                         name="dob" required>
+                                                                                        <label for="validationCustom01">Birth Date</label>
+                                                                                        <div class="invalid-feedback">
+                                                                                            please choose
+                                                                                          </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div class="form-label-group">
+
+
+                                                                                <input type="phone" class="form-control" placeholder="Mobile"
+                                                                                name="phone"
+                                                                                value="{{profile_data.Mobile}}" required> 
+                                                                                <label for="validationCustom01">Mobile</label>
+                                                                                <div class="invalid-feedback">
+                                                                                    please enter Mobile number
+                                                                                  </div>
+                                                                            </div>
+                                                                            <div class="form-label-group gender_choice" gender="{{profile_data.Gender}}">
+                                                                                <p>Gender</p>
+                                                                                {% for g in gender_choice %}
+                                                                                <div
+                                                                                    class="custom-control custom-radio custom-control-inline">
+                                                                                    <input type="radio"
+                                                                                    
+                                                                                        id="{{g.short_val}}"
+                                                                                        name="gender"
+                                                                                        value="{{g.short_val}}"
+                                                                                        class="custom-control-input" placeholder="Male" required>
+                                                                                    <label class="custom-control-label"
+                                                                                        for="{{g.short_val}}" for="validationCustom01" >{{g.text}}</label>
+                                                                                        <div class="invalid-feedback">
+                                                                                            please choose gender
+                                                                                          </div>
+                                                                                </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-label-group">
+                                                                                        <input type="text"
+                                                                                        class="form-control"
+                                                                                        value="{{profile_data.Country}}"
+                                                                                        name="country" placeholder="Country" required>
+                                                                                        <label for="validationCustom01">Country</label>
+                                                                                        <div class="invalid-feedback">
+                                                                                            please enter country
+                                                                                          </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                    
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-label-group">
+                                                                                        <input type="text" class="form-control" value="{{profile_data.State}}" name="state" placeholder="State" required>
+                                                                                        <label for="validationCustom01">State</label>
+                                                                                        <div class="invalid-feedback">
+                                                                                            please enter state
+                                                                                          </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-label-group">
+                                                                                <input type="text" class="form-control" value="{{profile_data.City}}" name="city" placeholder="City" required>
+                                                                                <label for="validationCustom01">City</label>
+                                                                                <div class="invalid-feedback">
+                                                                                    please enter CIty
+                                                                                  </div>
+                                                                            </div>
+                                                                            <div class="form-row">
+                                                                                <div class="form-label-group col">
+                                                                                    <textarea type="textarea"
+                                                                                    class="form-control form-label-group" id="exampleFormControlTextarea1"
+                                                                                    rows="3" name="address" placeholder="Address" for="validationCustom01" required>{{profile_data.Address}}</textarea>
+                                                                                    <div class="invalid-feedback">
+                                                                                        please enter address
+                                                                                      </div>
+                                                                                </div> 
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                    Changes</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                                                        aria-labelledby="v-pills-profile-tab">
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                                                        aria-labelledby="v-pills-messages-tab">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">Security</h6>
+                                                                <form action="{% url 'change_password'%}" method="post" class="needs-validation" novalidate>
+                                                                    {% csrf_token %}
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-label-group">
+                                                                                <input type="password"
+                                                                                class="form-control" name="old_password" placeholder="Old Password" required>
+                                                                                <label for="validationCustom01">Old Password</label>
+                                                                                <div class="invalid-feedback">
+                                                                                    please enter old password
+                                                                                  </div>
+                                                                            </div>
+                                                                            <div class="form-label-group">
+                                                                                <input type="password"
+                                                                                class="form-control" name="new_password" placeholder="New Password" required>
+                                                                                <label for="validationCustom01">New Password</label>
+                                                                                <div class="invalid-feedback">
+                                                                                    please enter New password 
+                                                                                  </div>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                        Changes</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                                                        aria-labelledby="v-pills-settings-tab">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">Social</h6>
+                                                                <form>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-label-group">
+                                                                                <label>Twitter</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="https://twitter.com/roxana-roussell">
+                                                                            </div>
+                                                                            <div class="form-label-group">
+                                                                                <label>Facebook</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="https://www.facebook.com/roxana-roussell">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-label-group">
+                                                                                <label>Instagram</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="https://www.instagram.com/roxana-roussell/">
+                                                                            </div>
+                                                                            <div class="form-label-group">
+                                                                                <label>GitHub</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    value="https://github.com/roxana-roussell">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-primary">Save
+                                                                        Changes</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    
+                                    <div class="tab-pane show active app-block" id="timeline" role="tabpanel">
+                                        <div class="card">
+                                            
+                                            <div class="col-md-12 app-content">
+                                                <div class="app-content-overlay"></div>
+                                                <div class="app-action">
+                                                    <div class="action-left">
+                                                        <ul class="list-inline">
+
+                                                            <li class="list-inline-item mb-0">
+                                                                <div class="card-body">
+                                                                    <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#newTaskModal">
+                                                                        New Task
+                                                                    </button>
+                                                                </div>
+                                                            </li>
+                                                            <li class="list-inline-item mb-0">
+                                                                
+                                                                <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                                                    Filter
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="#">Favourites</a>
+                                                                    <a class="dropdown-item" href="#">Done</a>
+                                                                    <a class="dropdown-item" href="#">Deleted</a>
+                                                                </div>
+                                                            </li>
+                                                            <li class="list-inline-item mb-0">
+                                                                <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                                                    Sort
+                                                                </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="#">Ascending</a>
+                                                                    <a class="dropdown-item" href="#">Descending</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="action-right">
+                                                        <form class="d-flex mr-3">
+                                                            <a href="#" class="app-sidebar-menu-button btn btn-outline-light">
+                                                                <i data-feather="menu" class="width-15 height-15"></i>
+                                                            </a>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="Task search"
+                                                                       aria-describedby="button-addon1">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-light" type="button" id="button-addon1">
+                                                                        <i class="ti-search"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <div class="app-pager d-flex align-items-center">
+                                                            <div class="mr-3">1-50 of 253</div>
+                                                            <nav aria-label="Page navigation example">
+                                                                <ul class="pagination">
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="#" aria-label="Previous">
+                                                                            <i data-feather="chevron-left" class="width-15 height-15"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="#" aria-label="Next">
+                                                                            <i data-feather="chevron-right" class="width-15 height-15"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card card-body app-content-body">
+                                                    <div class="app-lists">
+                                                        <ul class="list-group list-group-flush">
+                                                            {% for todo in my_todo %}
+                                                            <li class="list-group-item task-list {% if todo.Iscomplete %} active {% endif %}" todo-title="{{todo.Title}}" todo-desc="{{todo.Description}}" todo-created-date="" todo-deadline="{{todo.Deadline}}" todo-tags="{{todo.Tags}}"  todo-iscompleted="{{todo.Iscomplete}}">
+                                                                <div class="mr-3">
+                                                                    <a href="#" class="app-sortable-handle">
+                                                                        <i data-feather="move" class="width-15 height-15"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="custom-control custom-checkbox custom-checkbox-success mr-2">
+                                                                        <input type="checkbox" class="custom-control-input" id="{{todo.Title}}"
+                                                                        {% if todo.Iscomplete %} checked {% endif %}>
+                                                                        <label class="custom-control-label" for="{{todo.Title}}"></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="add-star mr-3" title="Add stars">
+                                                                        <i class="fa fa-star-o font-size-16"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="flex-grow-1 min-width-0">
+                                                                    <div class="mb-1 d-flex align-items-center justify-content-between">
+                                                                        <div class="app-list-title text-truncate">{{todo.Title}}
+                                                                        </div>
+                                                                        <div class="pl-3 d-flex align-items-center">
+                                                                            <div class="mr-3 d-sm-inline d-none">
+                                                                                <div class="badge badge-danger">{{todo.Tags}}</div>
+                                                                            </div>
+                                                                            <div class="mr-3 d-sm-inline d-none">
+                                                                                <div class="avatar-group">
+                                                                                    <figure class="avatar avatar-sm" title="Lisle Essam"
+                                                                                            data-toggle="tooltip">
+                                                                                        <img src="../../assets/media/image/user/women_avatar2.jpg"
+                                                                                             class="rounded-circle"
+                                                                                             alt="image">
+                                                                                    </figure>
+                                                                                    <figure class="avatar avatar-sm" title="Baxie Roseblade"
+                                                                                            data-toggle="tooltip">
+                                                                                        <img src="../../assets/media/image/user/man_avatar5.jpg"
+                                                                                             class="rounded-circle"
+                                                                                             alt="image">
+                                                                                    </figure>
+                                                                                    <figure class="avatar avatar-sm" title="Mella Mixter"
+                                                                                            data-toggle="tooltip">
+                                                                                        <img src="../../assets/media/image/user/women_avatar1.jpg"
+                                                                                             class="rounded-circle"
+                                                                                             alt="image">
+                                                                                    </figure>
+                                                                                    <figure class="avatar avatar-sm" title="Jo Hugill"
+                                                                                            data-toggle="tooltip">
+                                                                                        <img src="../../assets/media/image/user/man_avatar1.jpg"
+                                                                                             class="rounded-circle"
+                                                                                             alt="image">
+                                                                                    </figure>
+                                                                                    <figure class="avatar avatar-sm" title="Cullie Philcott"
+                                                                                            data-toggle="tooltip">
+                                                                                        <img src="../../assets/media/image/user/women_avatar5.jpg"
+                                                                                             class="rounded-circle"
+                                                                                             alt="image">
+                                                                                    </figure>
+                                                                                </div>
+                                                                            </div>
+                                                                            <a href="#" title="Delete" data-toggle="tooltip">
+                                                                                <i data-feather="trash-2" class="width-15 height-15"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <!-- end::app-lists -->
+                                            
+                                                    <!-- begin:app-detail -->
+                                                    <div class="card app-detail">
+                                                        <div class="card-header">
+                                                            <div class="app-detail-action-left">
+                                                                <a class="app-detail-close-button" href="#">
+                                                                    <i data-feather="arrow-left" class="mr-3"></i>
+                                                                </a>
+                                                                <h5 class="mb-0">Draw design and presentation for customers. </h5>
+                                                            </div>
+                                                            <div class="app-detail-action-right">
+                                                                <div>
+                                                                    <a href="#" class="btn is-completed btn-success" data-toggle="tooltip"
+                                                                       title="2:44 AM">
+                                                                        <i data-feather="check" class="mr-2"></i>
+                                                                        <span> Completed</span> 
+                                                                    </a>
+                                                                    <span data-toggle="modal" data-target="#editTaskModal">
+                                                                            <a href="#" class="btn btn-outline-light ml-2" title="Edit Task"
+                                                                               data-toggle="tooltip">
+                                                                                <i data-feather="edit-3"></i>
+                                                                            </a>
+                                                                        </span>
+                                                                    <a href="#" class="btn btn-outline-light ml-2" data-toggle="tooltip"
+                                                                       title="Delete Task">
+                                                                        <i data-feather="trash"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="app-detail-article">
+                                                            <div class="card-body">
+                                                                <div class="d-flex align-items-center p-l-r-0 m-b-20">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="avatar-group">
+                                                                            <div class="avatar avatar-sm" title="Polly Everist"
+                                                                                 data-toggle="tooltip">
+                                                                                <span class="avatar-title bg-primary rounded-circle">P</span>
+                                                                            </div>
+                                                                            <div class="avatar avatar-sm" title="Godwin Adanez"
+                                                                                 data-toggle="tooltip">
+                                                                                <span class="avatar-title bg-success rounded-circle">G</span>
+                                                                            </div>
+                                                                            <figure class="avatar avatar-sm" title="Lisle Essam"
+                                                                                    data-toggle="tooltip">
+                                                                                <img src="../../assets/media/image/user/women_avatar2.jpg"
+                                                                                     class="rounded-circle"
+                                                                                     alt="image">
+                                                                            </figure>
+                                                                            <figure class="avatar avatar-sm" title="Baxie Roseblade"
+                                                                                    data-toggle="tooltip">
+                                                                                <img src="../../assets/media/image/user/man_avatar5.jpg"
+                                                                                     class="rounded-circle"
+                                                                                     alt="image">
+                                                                            </figure>
+                                                                            <figure class="avatar avatar-sm" title="Mella Mixter"
+                                                                                    data-toggle="tooltip">
+                                                                                <img src="../../assets/media/image/user/women_avatar1.jpg"
+                                                                                     class="rounded-circle"
+                                                                                     alt="image">
+                                                                            </figure>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ml-auto">
+                                                                        <span class="badge bg-warning badge-pill mr-2">Theme Support</span>
+                                                                        <a href="#" data-toggle="tooltip" title="Files" class="mr-2">
+                                                                            <i class="fa fa-paperclip"></i>
+                                                                        </a>
+                                                                        <a href="#" class="mr-2">
+                                                                            <i class="fa fa-star font-size-16 text-warning"></i>
+                                                                        </a>
+                                                                        <span class="text-muted">4:14 AM</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur corporis
+                                                                        incidunt labore modi numquam omnis pariatur possimus suscipit vitae
+                                                                        voluptas?
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <hr class="m-0">
+                                                            <div class="card-body">
+                                                                <h6 class="mb-3 font-size-11 text-uppercase">Files</h6>
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="small">
+                                                                        <a href="#">
+                                                                            <i data-feather="paperclip" class="mr-1 width-15 height-15"></i>
+                                                                            uikit-design.psd
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="small">
+                                                                        <a href="#">
+                                                                            <i data-feather="paperclip" class="mr-1 width-15 height-15"></i>
+                                                                            uikit-design.sketch
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <hr class="m-0">
+                                                            <div class="card-body">
+                                                                <h6 class="mb-3 font-size-11 text-uppercase">Comment</h6>
+                                                                <div class="reply-email-quill-editor mb-3"></div>
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div class="reply-email-quill-toolbar">
+                                                                            <span class="ql-formats mr-0">
+                                                                              <button class="ql-bold"></button>
+                                                                              <button class="ql-italic"></button>
+                                                                              <button class="ql-underline"></button>
+                                                                              <button class="ql-link"></button>
+                                                                              <button class="ql-image"></button>
+                                                                            </span>
+                                                                    </div>
+                                                                    <button class="btn btn-primary">
+                                                                        <i data-feather="send" class="mr-2"></i>
+                                                                        Send
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tab-pane fade" id="connections" role="tabpanel">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title">Connections</h6>
+                                                <form action="search_ref" method="post" class="d-flex mr-3 ref-search">
+                                                    {% csrf_token %}
+                                                    <div class="input-group">
+                                                        <input type="text" name="ref_id" class="form-control" placeholder="Search your connections"
+                                                               aria-describedby="button-addon1">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-light" type="submit" id="button-addon1">
+                                                                <!-- <i class="ti-search"></i> -->
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div class="row search-results">
+
+                                                    {% for connection in myconnections %}
+                                                    
+                                                    <div class="col-lg-6 col-md-12">
+                                                        
+                                                        <div class="card border shadow-none">
+                                                            <div class="card-body p-3">
+                                                                
+                                                                <div class="d-flex align-items-center">
+                                                                    <div>
+                                                                        <figure class="avatar mr-3">
+                                                                            <img src="{{connection.profile.Img.url}}"                                                                                class="rounded-circle" alt="...">
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p class="mb-0">{{connection.profile.FullName}}</p>
+                                                                        <p class="small text-muted mb-0 line-height-15">
+                                                                            {{connection.profile.JobTitle}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <a href="#" class="ml-auto" title="Message"
+                                                                        data-toggle="tooltip">
+                                                                        <i data-feather="message-circle"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="earnings" role="tabpanel">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title mb-0">Earnings</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Item Sales Count</th>
+                                                            <th>Earnings</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>monday, 12</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$400</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>tuesday, 13</td>
+                                                            <td>
+                                                                2
+                                                            </td>
+                                                            <td>$400</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>wednesday, 14</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$420</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>thursday, 15</td>
+                                                            <td>
+                                                                5
+                                                            </td>
+                                                            <td>$500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>friday, 15</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$400</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>saturday, 16</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$400</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>sunday, 17</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$400</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>monday, 18</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>tuesday, 19</td>
+                                                            <td>
+                                                                3
+                                                            </td>
+                                                            <td>$400</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>28</th>
+                                                            <th>$3720</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+<!-- upload image model -->
+<div class="modal fade" id="upload_model" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <div class="col-sm-9">
+                            <input type="file" id="myFile" name="imag">
+                        </div>
+                        <div class="col-sm-9 p-4">
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+
+                    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- new task model -->
+            <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Task</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="ti-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form autocomplete="off" action="{% url 'create_todo' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Task title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="title" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Tags</label>
+                                    <div class="col-sm-9">
+                                        <select class="js-example-basic-single" name="tags" multiple>
+                                            <option value="Theme Support">Theme Support</option>
+                                            <option value="Freelance">Freelance</option>
+                                            <option selected value="Social">Social</option>
+                                            <option selected value="Friends">Friends</option>
+                                            <option value="Coding">Coding</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row row-sm">
+                                    <label class="col-sm-3 col-form-label">Deadline</label>
+                                    <div class="col-sm-5">
+                                        <input type="date" name="todo_deadline"  class="form-control create-event-datepicker"
+                                               placeholder="Date">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="time" name="todo_time" class="form-control create-event-demo"
+                                               placeholder="Time">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Participate</label>
+                                    <div class="col-sm-9">
+                                        <div class="avatar-group selected-members">
+                                            
+
+                                        </div>
+                                        <button type="button" class="btn btn-outline-light btn-sm btn-floating" title="Add User"
+                                                data-toggle="dropdown">
+                                            <i class="ti-plus"></i>
+                                        </button>
+                                        <div class="dropdown-menu p-0">
+                                            <div class="p-3">
+                                                <h6 class="text-uppercase font-size-11 mb-3">Add User</h6>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control search-member" placeholder="Search User"
+                                                           aria-describedby="button-addon3">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-light" type="button" id="button-addon3">
+                                                            <i class="ti-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-group list-group-flush mt-2 member-list">
+                            
+                                                        <select class="d-none" name="participate" multiple>
+                                                            {% for connection in myconnections %}
+                                                                <option value="{{connection.id}}" class="member_id_{{connection.id}}">{{connection.Profile.SortName}}</option>
+                                                            {% endfor %}
+                                                            </select>
+
+                                                    {% for connection in myconnections %}
+                                                    <li member-id="{{connection.id}}" class="member-list-item list-group-item d-flex align-items-center pl-0 pr-0">
+                                                        <div class="mr-2">
+                                                            {% if connection.profile.Img %}
+                                                                <figure member-id="{{connection.id}}" class="avatar mr-3">
+                                                                    <img src="{{connection.profile.Img.url}}"class="rounded-circle" alt="...">
+                                                                </figure>                                                            
+                                                            {% else %}   
+                                                                <figure member-id="{{connection.id}}" class="avatar avatar-sm">
+                                                                    <span class="avatar-title bg-primary rounded-circle">{{connection.profile.short_name}}</span>
+                                                                </figure>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0">{{connection.profile.FullName}}</h6>
+                                                        </div>
+                                                        <div class="dropdown ml-auto">
+                                                            <a href="#" data-toggle="dropdown" is-removed="0" class="select-member-btn btn btn-outline-light btn-sm"
+                                                               aria-haspopup="true" aria-expanded="false">
+                                                               <i class="lni lni-plus"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" name="todo_description" rows="6"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <button type="submit" class="btn btn-primary">Create</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  
+            <!-- chat board model -->
+
+            <div class="modal fade" id="chat_board" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chat boat</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="ti-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            
+				<div class="col-12">
+					<div class="py-2 px-4 border-bottom d-none d-lg-block">
+						<div class="d-flex align-items-center py-1">
+
+
+						</div>
+					</div>
+
+					<div class="position-relative">
+						<div class="chat-messages p-4">
+
+							<div class="chat-message-right pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:33 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
+								</div>
+							</div>
+
+							<div class="chat-message-left pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:34 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">Sharon Lessman</div>
+									Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
+								</div>
+							</div>
+
+							<div class="chat-message-right mb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:35 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									Cum ea graeci tractatos.
+								</div>
+							</div>
+
+							<div class="chat-message-left pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:36 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">Sharon Lessman</div>
+									Sed pulvinar, massa vitae interdum pulvinar, risus lectus porttitor magna, vitae commodo lectus mauris et velit.
+									Proin ultricies placerat imperdiet. Morbi varius quam ac venenatis tempus.
+								</div>
+							</div>
+
+							<div class="chat-message-left pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:37 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">Sharon Lessman</div>
+									Cras pulvinar, sapien id vehicula aliquet, diam velit elementum orci.
+								</div>
+							</div>
+
+							<div class="chat-message-right mb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:38 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
+								</div>
+							</div>
+
+							<div class="chat-message-left pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:39 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">Sharon Lessman</div>
+									Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
+								</div>
+							</div>
+
+							<div class="chat-message-right mb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:40 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									Cum ea graeci tractatos.
+								</div>
+							</div>
+
+							<div class="chat-message-right mb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:41 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									Morbi finibus, lorem id placerat ullamcorper, nunc enim ultrices massa, id dignissim metus urna eget purus.
+								</div>
+							</div>
+
+							<div class="chat-message-left pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:42 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">Sharon Lessman</div>
+									Sed pulvinar, massa vitae interdum pulvinar, risus lectus porttitor magna, vitae commodo lectus mauris et velit.
+									Proin ultricies placerat imperdiet. Morbi varius quam ac venenatis tempus.
+								</div>
+							</div>
+
+							<div class="chat-message-right mb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:43 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+									<div class="font-weight-bold mb-1">You</div>
+									Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
+								</div>
+							</div>
+
+							<div class="chat-message-left pb-4">
+								<div>
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+									<div class="text-muted small text-nowrap mt-2">2:44 am</div>
+								</div>
+								<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+									<div class="font-weight-bold mb-1">Sharon Lessman</div>
+									Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="flex-grow-0 py-3 px-4 border-top">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Type your message">
+							<button class="btn btn-primary">Send</button>
+						</div>
+					</div>
+
+				</div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        <!-- edit task model -->
+            <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Task</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="ti-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form autocomplete="off" method="post" action="{% url 'create_todo' %}">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Task title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" placeholder="Title"
+                                               value="Draw design and presentation for customers.">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Tags</label>
+                                    <div class="col-sm-9">
+                                        <select class="js-example-basic-single" multiple>
+                                            <option selected value="Theme Support">Theme Support</option>
+                                            <option value="Freelance">Freelance</option>
+                                            <option value="Social">Social</option>
+                                            <option value="Friends">Friends</option>
+                                            <option value="Coding">Coding</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row row-sm">
+                                    <label class="col-sm-3 col-form-label">Deadline</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control create-event-datepicker"
+                                               placeholder="Date" value="10/31/2019">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control create-event-demo" value="11:57"
+                                               placeholder="Time">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Participate</label>
+                                    <div class="col-sm-9">
+                                        <div class="avatar-group selected-members">
+                                            
+
+                                        </div>
+                                        <button type="button" class="btn btn-outline-light btn-sm btn-floating" title="Add User"
+                                                data-toggle="dropdown">
+                                            <i class="ti-plus"></i>
+                                        </button>
+                                        <div class="dropdown-menu p-0">
+                                            <div class="p-3">
+                                                <h6 class="text-uppercase font-size-11 mb-3">Add User</h6>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control search-member" placeholder="Search User"
+                                                           aria-describedby="button-addon3">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-light" type="button" id="button-addon3">
+                                                            <i class="ti-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-group list-group-flush mt-2 member-list">
+                            
+                                                        <select class="d-none" name="participate" multiple>
+                                                            {% for connection in myconnections %}
+                                                                <option value="{{connection.id}}" class="member_id_{{connection.id}}">{{connection.Profile.SortName}}</option>
+                                                            {% endfor %}
+                                                            </select>
+
+                                                    {% for connection in myconnections %}
+                                                    <li member-id="{{connection.id}}" class="member-list-item list-group-item d-flex align-items-center pl-0 pr-0">
+                                                        <div class="mr-2">
+                                                            {% if connection.profile.Img %}
+                                                                <figure member-id="{{connection.id}}" class="avatar mr-3">
+                                                                    <img src="{{connection.profile.Img.url}}"class="rounded-circle" alt="...">
+                                                                </figure>                                                            
+                                                            {% else %}   
+                                                                <figure member-id="{{connection.id}}" class="avatar avatar-sm">
+                                                                    <span class="avatar-title bg-primary rounded-circle">{{connection.profile.short_name}}</span>
+                                                                </figure>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0">{{connection.profile.FullName}}</h6>
+                                                        </div>
+                                                        <div class="dropdown ml-auto">
+                                                            <a href="#" data-toggle="dropdown" is-removed="0" class="select-member-btn btn btn-outline-light btn-sm"
+                                                               aria-haspopup="true" aria-expanded="false">
+                                                               <i class="lni lni-plus"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" rows="6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur corporis incidunt labore modi numquam omnis pariatur possimus suscipit vitae voluptas?</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <button type="submit" class="btn btn-success">
+                                            <i data-feather="check" class="mr-2"></i>
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+
+            <!-- begin::footer -->
+            <footer class="content-footer ml-0">
+                <div>© 2020 Nago - <a href="http://laborasyon.com/" target="_blank">Laborasyon</a></div>
+                <div>
+                    <nav class="nav">
+                        <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
+                        <a href="#" class="nav-link">Change Log</a>
+                        <a href="#" class="nav-link">Get Help</a>
+                    </nav>
+                </div>
+            </footer>
+            <!-- end::footer -->
+
+        </div>
+
+    </div>
+
+</div>
+<!-- end::main -->
+{% endblock %}
+
+
+{% block scripts %}
+
+<!-- Datepicker -->
+<script src="{% static 'vendors/datepicker/daterangepicker.js'%}"></script>
+<script src="{% static 'assets/js/examples/datepicker.js'%}"></script>
+
+<!-- messsages js -->
+
+<script src="{% static 'assets/js/examples/message.js'%}"></script>
+
+
+<!-- Prism -->
+<script src="{% static 'vendors/prism/prism.js'%}"></script>
+
+<!-- Date and time and gender scripts -->
+<script>
+    $('input[name="dob"]').daterangepicker({
+        // dateFormat: 'YYYY-MM-DD',
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+
+    // // gender update
+    var gender= $('.gender_choice').attr('gender');
+    $(`#${gender}`).prop('checked',true)
+</script>
+
+<!-- todo_list Scripts -->
+<script>
+    new Quill('.reply-email-quill-editor', {
+        modules: {
+            toolbar: ".reply-email-quill-toolbar"
+        },
+        placeholder: "Type something... ",
+        theme: "snow"
+    });
+
+    $(function () {
+        $(document).on('click', '.app-block .app-content .app-action .action-left input[type="checkbox"]', function () {
+            $('.app-lists ul li input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+            if ($(this).prop('checked')) {
+                $('.app-lists ul li input[type="checkbox"]').closest('li').addClass('active');
+            } else {
+                $('.app-lists ul li input[type="checkbox"]').closest('li').removeClass('active');
+            }
+        });
+
+        $(document).on('click', '.app-lists ul li input[type="checkbox"]', function () {
+            if ($(this).prop('checked')) {
+                $(this).closest('li').addClass('active');
+            } else {
+                $(this).closest('li').removeClass('active');
+            }
+        });
+
+        $(document).on('click', '.app-block .app-content .app-content-body .app-lists ul.list-group li.list-group-item', function (e) {
+            if (!$(e.target).is('.custom-control, .custom-control *, a, a *')) {
+                $('.app-detail').addClass('show').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+                    $('.app-block .app-content .app-content-body .app-detail .app-detail-article').niceScroll().resize();
+                });
+            }
+        });
+
+        $(document).on('click', 'a.app-detail-close-button', function () {
+            $('.app-detail').removeClass('show');
+            return false;
+        });
+
+        $(document).on('click', '.app-sidebar-menu-button', function () {
+            $('.app-block .app-sidebar, .app-content-overlay').addClass('show');
+            // $('.app-block .app-sidebar .app-sidebar-menu').niceScroll().resize();
+            return false;
+        });
+
+        $(document).on('click', '.app-content-overlay', function () {
+            $('.app-block .app-sidebar, .app-content-overlay').removeClass('show');
+            return false;
+        });
+
+        $('.app-block .app-content .app-content-body .app-lists ul').sortable({
+            axis: "y",
+            cursor: "move",
+            handle: '.app-sortable-handle'
+        }).disableSelection();
+    });
+
+
+    // ajax to update data of form
+    function submitForm(form) {
+            form.submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+
+                    
+ // timeout: 5000,
+                    success: function (response) {
+                        var dom = `<div class="col-lg-6 col-md-12">                                                        
+                                                        <div class="card border shadow-none">
+                                                            <div class="card-body p-3">
+                                                                
+                                                                <div class="d-flex align-items-center">
+                                                                    <div>
+                                                                        <figure class="avatar mr-3">
+                                                                            <img src="{% static 'assets/media/image/user/women_avatar1.jpg'%}"
+                                                                                class="rounded-circle" alt="...">
+                                                                        </figure>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p class="mb-0">${response.ref_data.FullName}</p>
+                                                                        <p class="small text-muted mb-0 line-height-15">
+                                                                            ${response.ref_data.JobTitle}
+                                                                        </p>
+                                                                    </div>
+                                                                    <a href="#" class="ml-auto" title="Message"
+                                                                        data-toggle="tooltip">
+                                                                        <i data-feather="message-circle"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>`
+                        $('.search-results').html(dom);
+                        var main = $('this')
+                        main.find('input[name="fname"]').val(response.profile_data.FullName);
+                        main.find('input[name="phone"]').val(response.profile_data.Mobile);
+                        main.find('input[name="city"]').val(response.profile_data.City);
+                        main.find('input[name="state"]').val(response.profile_data.State);
+                        main.find('input[name="country"]').val(response.profile_data.Country);
+                        main.find('textarea[name="address"]').val(response.profile_data.Address);
+                        main.find('input[name="dob"]').val(response.t);
+
+                        // gender update
+                        // var gender= $('.gender_choice').attr('gender');
+                        $(`#${response.profile_data.Gender}`).prop('checked', true);
+                        toastr.success('Profile updated successfully');
+
+
+                    },
+                    error: function (jqXHR, textStatus) { },
+                });
+
+            })
+
+
+    }
+        submitForm($('.profile_form'));
+        submitForm($('.ref-search'));
+
+        // task detail showing while clicking on the todo list
+        $('.task-list').click(function(){
+            var deadline=$(this).attr('todo-deadline');
+            var todo_title=$(this).attr('todo-title');
+            var todo_created_date=$(this).attr('todo-created-date');
+            var todo_desc=$(this).attr('todo-desc');
+            var todo_tags=$(this).attr('todo-tags');
+            var todo_is_completed=$(this).attr('todo-iscompleted');
+            $('.app-detail-action-left h5').text(todo_title)
+            $('.app-detail-article .description').html(`<p>${todo_desc}</p>`);
+            if (todo_is_completed == "True") {
+                $('.app-detail-action-right .is-completed').addClass('btn-success').find('span').text('Completed');
+                
+            } else{
+
+                $('.app-detail-action-right .is-completed').addClass('btn-danger').find('span').text('Not Completed')
+            }
+        });
+
+        // dropdown member selection 
+        var member_list=[];
+        $('.select-member-btn').click(function(){
+            // $(this).parents('li').attr('member-id')
+            var member_id= $(this).parents('li').attr('member-id');
+            
+            if ($(this).attr('is-removed') == "0") {
+
+                member_list.push(member_id);
+
+                var selected_member =$(this).parents('li').find('figure').parent('div').html();
+                
+                $('.selected-members').append(selected_member);
+                $('select[name="participate"]').find(`option.member_id_${member_id}`).attr('selected',true)
+                $(this).html(`<i class="lni lni-trash-can"></i>`);
+                $(this).attr('is-removed',1);
+            }else{
+                $('.selected-members').find(`figure[member-id=${member_id}]`).remove();
+                $(this).html(`<i class="lni lni-plus"></i>`);
+                $(this).attr('is-removed',0);
+                $('select[name="participate"]').find(`option.member_id_${member_id}`).removeAttr('selected')
+                // member_list.pop(member_id);
+            }
+            
+            $('.selected-members').attr('members',member_list);
+            
+            
+        })
+         
+        // search connections
+            
+    
+            $(".search-member").keydown(function(){
+
+                
+                // hide  all content class
+
+                $('.member-list-item').addClass("search-hide");
+
+                var text =$(this).val();
+
+                if(text.length == 0){
+                    $('.member-list-item').removeClass("search-hide");
+                }
+
+                // search and show
+
+                $('.member-list-item:contains("'+text+'")').removeClass("search-hide");
+        });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'todoapp/base.html'%}
+{% load static %}
+
+
+{% block content %}
+
+<!-- begin::preloader-->
+<div class="preloader">
+    <div class="preloader-icon"></div>
+</div>
+<!-- end::preloader -->
+
+<div class="form-wrapper">
+
+    
+    <!-- logo -->
+    <div id="logo">
+        <img class="logo" src="{% static 'assets/media/image/logo.png'%}" alt="image">
+        <img class="logo-dark" src="{% static 'assets/media/image/logo-dark.html'%}" alt="image">
+    </div>
+    <!-- ./ logo -->
+
+    <h5>Sign in</h5>
+
+    <!-- form -->
+    <form method="post" action="{% url 'login_data' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Username or email" required autofocus>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+        <div class="form-group d-flex justify-content-between">
+           
+            <a href="{% url 'reset_pass'%}">Reset password</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+        <div class="form-group d-flex justify-content-between">
+
+            
+        </div>
+        <p class="text-muted">Don't have an account?</p>
+        <a href="{% url 'register'%}" class="btn btn-outline-light btn-sm">Register now!</a>
+    </form>
+   
+    <!-- ./ form -->
+
+
+</div>
+
+
+{% endblock %}
+

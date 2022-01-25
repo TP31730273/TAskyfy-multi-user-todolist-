@@ -1,0 +1,188 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome</title>
+
+    <!-- font-awsome -->
+    <link rel="stylesheet" href="https://cdn.lineicons.com/3.0/lineicons.css"> 
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/media/image/favicon.png'%}" />
+
+    <!-- Plugin styles -->
+    <link rel="stylesheet" href="{% static 'vendors/bundle.css'%}" type="text/css">
+
+        <!-- quill -->
+    <link href="{% static 'vendors/quill/quill.snow.css'%}" rel="stylesheet" type="text/css">
+
+    <!-- Clockpicker -->
+    <link rel="stylesheet" href="{% static 'vendors/clockpicker/bootstrap-clockpicker.min.css'%}" type="text/css">
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="{% static 'vendors/datepicker/daterangepicker.css'%}" type="text/css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{% static 'vendors/select2/css/select2.min.css'%}" type="text/css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.min.css'%}" type="text/css">
+
+    <!-- chat-bot css -->
+    <link rel="stylesheet" href="{% static 'assets/css/chat.css'%}" type="text/css">
+    {% block css %}
+
+    {% endblock%}
+    <!-- Plugin styles -->
+    <link rel="stylesheet" href="{% static 'vendors/bundle.css'%}" type="text/css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.min.css'%}" type="text/css">
+    <style>
+        /* floating label style */
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-label-group>input,
+        .form-label-group>label {
+            height: 3.125rem !important;
+            padding: .75rem !important;
+            padding-left: 1.1rem !important;
+        }
+
+        .form-label-group>label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            padding-left: 1.1rem !important;
+            margin-bottom: 0;
+            /* Override default `<label>` margin */
+            line-height: 1.5;
+            color: #495057;
+            pointer-events: none;
+            cursor: text;
+            /* Match the input under the label */
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            transition: all .1s ease-in-out;
+        }
+
+        .form-label-group input::-webkit-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-moz-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:not(:placeholder-shown) {
+            padding-top: 1.25rem;
+            padding-bottom: .25rem;
+        }
+
+        .form-label-group input:not(:placeholder-shown)~label {
+            padding-top: .25rem !important;
+            padding-bottom: .25rem !important;
+            font-size: 12px !important;
+            color: #777 !important;
+        }
+
+        /* Fallback for Edge
+-------------------------------------------------- */
+        @supports (-ms-ime-align: auto) {
+            .form-label-group>label {
+                display: none;
+            }
+
+            .form-label-group input::-ms-input-placeholder {
+                color: #777;
+            }
+        }
+    </style>
+</head>
+
+<body class="{% if current_page in form_membership %}
+
+form-membership
+
+{% endif %}">
+
+
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- Plugin scripts -->
+    <script src="{% static 'vendors/bundle.js'%}"></script>
+
+
+    <!-- App scripts -->
+    <script src="{% static 'assets/js/app.min.js'%}"></script>
+
+    <!-- Tagsinput -->
+    
+    <script src="{% static 'vendors/tagsinput/bootstrap-tagsinput.js'%}"></script>
+    <script src="{% static 'assets/js/examples/tagsinput.js'%}"></script>
+
+    <!-- quill -->
+    <script src="{% static 'vendors/quill/quill.js'%}"></script>
+
+    <!-- Clockpicker -->
+    <script src="{% static 'vendors/clockpicker/bootstrap-clockpicker.min.js'%}"></script>
+    <script src="{% static 'assets/js/examples/clockpicker.js'%}"></script>
+
+    <!-- Select2 -->
+    <script src="{% static 'vendors/select2/js/select2.min.js'%}"></script>
+    <script src="{% static 'assets/js/examples/select2.js'%}"></script>
+
+    <!-- Datepicker -->
+    <script src="{% static 'vendors/datepicker/daterangepicker.js'%}"></script>
+    <script src="{% static 'assets/js/examples/datepicker.js'%}"></script>
+
+    <!-- font-awsome -->
+    
+
+    <script>
+        $(document).ready(function () {
+            toastr.options = {
+                timeOut: 2000,
+                progressBar: true,
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                showDuration: 200,
+                hideDuration: 200,
+                positionClass: "toast-top-center"
+            };
+
+        })
+
+    </script>
+    {% block scripts %}
+
+    {% endblock %}
+</body>
+
+
+
+</html>
