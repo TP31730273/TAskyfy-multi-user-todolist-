@@ -1747,8 +1747,8 @@
                                                 <div class="card card-body app-content-body">
                                                     <div class="app-lists">
                                                         <ul class="list-group list-group-flush">
-                                                            {% for todo in my_todo %}
-                                                            <li class="list-group-item task-list {% if todo.Iscomplete %} active {% endif %}" todo-title="{{todo.Title}}" todo-desc="{{todo.Description}}" todo-created-date="" todo-deadline="{{todo.Deadline}}" todo-tags="{{todo.Tags}}"  todo-iscompleted="{{todo.Iscomplete}}">
+                                                            {% for mt in my_todo %}
+                                                            <li class="list-group-item task-list {% if mt.todo.Iscomplete %} active {% endif %}" todo-id="{{mt.todo.id}}" todo-title="{{mt.todo.Title}}" todo-desc="{{mt.todo.Description}}" todo-created-date="" todo-deadline-date="{{mt.todo.Date}}" todo-deadline-time="{{mt.todo.Time}}" todo-tags="{{mt.todo.Tags}}"  todo-iscompleted="{{mt.todo.Iscomplete}}" todo-members="{% for tm in todo_members %}{% if todo in tm %}{{tm.profile.id}}{% endif %}{% endfor %}">
                                                                 <div class="mr-3">
                                                                     <a href="#" class="app-sortable-handle">
                                                                         <i data-feather="move" class="width-15 height-15"></i>
@@ -1756,9 +1756,9 @@
                                                                 </div>
                                                                 <div>
                                                                     <div class="custom-control custom-checkbox custom-checkbox-success mr-2">
-                                                                        <input type="checkbox" class="custom-control-input" id="{{todo.Title}}"
-                                                                        {% if todo.Iscomplete %} checked {% endif %}>
-                                                                        <label class="custom-control-label" for="{{todo.Title}}"></label>
+                                                                        <input type="checkbox" class="custom-control-input" id="{{mt.todo.Title}}"
+                                                                        {% if mt.todo.Iscomplete %} checked {% endif %}>
+                                                                        <label class="custom-control-label" for="{{mt.todo.Title}}"></label>
                                                                     </div>
                                                                 </div>
                                                                 <div>
@@ -1768,47 +1768,27 @@
                                                                 </div>
                                                                 <div class="flex-grow-1 min-width-0">
                                                                     <div class="mb-1 d-flex align-items-center justify-content-between">
-                                                                        <div class="app-list-title text-truncate">{{todo.Title}}
+                                                                        <div class="app-list-title text-truncate">{{mt.todo.Title}}
                                                                         </div>
                                                                         <div class="pl-3 d-flex align-items-center">
                                                                             <div class="mr-3 d-sm-inline d-none">
-                                                                                <div class="badge badge-danger">{{todo.Tags}}</div>
+                                                                                <div class="badge badge-danger">{{mt.todo.Tags}}</div>
                                                                             </div>
                                                                             <div class="mr-3 d-sm-inline d-none">
                                                                                 <div class="avatar-group">
-                                                                                    <figure class="avatar avatar-sm" title="Lisle Essam"
+                                                                                    {% for member in mt.members %}
+                                                                                    <figure class="avatar avatar-sm" title="{{member.Profile.FullName}}"
                                                                                             data-toggle="tooltip">
-                                                                                        <img src="../../assets/media/image/user/women_avatar2.jpg"
-                                                                                             class="rounded-circle"
-                                                                                             alt="image">
+                                                                                            {% if member.Profile.Avatar %}
+                                                                                                <img src="/uploads/{{member.Profile.Avatar}}"
+                                                                                                class="rounded-circle" alt="image">
+                                                                                            {% else %}
+                                                                                                <span class="avatar-title bg-primary rounded-circle">{{member.Profile.SortName}}</span>
+                                                                                            {% endif %}
                                                                                     </figure>
-                                                                                    <figure class="avatar avatar-sm" title="Baxie Roseblade"
-                                                                                            data-toggle="tooltip">
-                                                                                        <img src="../../assets/media/image/user/man_avatar5.jpg"
-                                                                                             class="rounded-circle"
-                                                                                             alt="image">
-                                                                                    </figure>
-                                                                                    <figure class="avatar avatar-sm" title="Mella Mixter"
-                                                                                            data-toggle="tooltip">
-                                                                                        <img src="../../assets/media/image/user/women_avatar1.jpg"
-                                                                                             class="rounded-circle"
-                                                                                             alt="image">
-                                                                                    </figure>
-                                                                                    <figure class="avatar avatar-sm" title="Jo Hugill"
-                                                                                            data-toggle="tooltip">
-                                                                                        <img src="../../assets/media/image/user/man_avatar1.jpg"
-                                                                                             class="rounded-circle"
-                                                                                             alt="image">
-                                                                                    </figure>
-                                                                                    <figure class="avatar avatar-sm" title="Cullie Philcott"
-                                                                                            data-toggle="tooltip">
-                                                                                        <img src="../../assets/media/image/user/women_avatar5.jpg"
-                                                                                             class="rounded-circle"
-                                                                                             alt="image">
-                                                                                    </figure>
-                                                                                </div>
-                                                                            </div>
-                                                                            <a href="#" title="Delete" data-toggle="tooltip">
+                                                                                    {% endfor %}
+                                                                             </div>
+                                                                            <a href="{% url 'remove_todo' pk=mt.todo.id %}" title="Delete" data-toggle="tooltip">
                                                                                 <i data-feather="trash-2" class="width-15 height-15"></i>
                                                                             </a>
                                                                         </div>
@@ -1836,7 +1816,7 @@
                                                                         <i data-feather="check" class="mr-2"></i>
                                                                         <span> Completed</span> 
                                                                     </a>
-                                                                    <span data-toggle="modal" data-target="#editTaskModal">
+                                                                    <span data-toggle="modal" data-target="#editTaskModal" edit-target-id="" class="edit-todo-btn">
                                                                             <a href="#" class="btn btn-outline-light ml-2" title="Edit Task"
                                                                                data-toggle="tooltip">
                                                                                 <i data-feather="edit-3"></i>
@@ -1894,9 +1874,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="description">
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur corporis
-                                                                        incidunt labore modi numquam omnis pariatur possimus suscipit vitae
-                                                                        voluptas?
+                                                                    <p>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -2196,7 +2174,7 @@
                             
                                                         <select class="d-none" name="participate" multiple>
                                                             {% for connection in myconnections %}
-                                                                <option value="{{connection.id}}" class="member_id_{{connection.id}}">{{connection.Profile.SortName}}</option>
+                                                                <option value="{{connection.id}}" class="member_id_{{connection.profile.id}}">{{connection.Profile.SortName}}</option>
                                                             {% endfor %}
                                                             </select>
 
@@ -2437,11 +2415,12 @@
                         </div>
                         <div class="modal-body">
                             <form autocomplete="off" method="post" action="{% url 'create_todo' %}">
+                                {% csrf_token %}
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Task title</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Title"
-                                               value="Draw design and presentation for customers.">
+                                        <input type="text" name="todo_title" class="form-control" placeholder="Title"
+                                               value="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -2459,11 +2438,11 @@
                                 <div class="form-group row row-sm">
                                     <label class="col-sm-3 col-form-label">Deadline</label>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control create-event-datepicker"
-                                               placeholder="Date" value="10/31/2019">
+                                        <input type="text" name="todo_deadline" class="form-control create-event-datepicker"
+                                               placeholder="Date" value="">
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control create-event-demo" value="11:57"
+                                        <input type="text" name="todo_time" class="form-control create-event-demo" value=""
                                                placeholder="Time">
                                     </div>
                                 </div>
@@ -2531,7 +2510,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">Description</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" rows="6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur corporis incidunt labore modi numquam omnis pariatur possimus suscipit vitae voluptas?</textarea>
+                                        <textarea class="form-control" name="todo_description" rows="6"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -2728,11 +2707,15 @@
         $('.task-list').click(function(){
             var deadline=$(this).attr('todo-deadline');
             var todo_title=$(this).attr('todo-title');
+            var todo_id=$(this).attr('todo-id');
             var todo_created_date=$(this).attr('todo-created-date');
             var todo_desc=$(this).attr('todo-desc');
             var todo_tags=$(this).attr('todo-tags');
             var todo_is_completed=$(this).attr('todo-iscompleted');
+
+            // $('.app-detail-action-left h5').text(todo_title)
             $('.app-detail-action-left h5').text(todo_title)
+            $('.app-detail-action-right .edit-todo-btn').attr('edit-target-id',todo_id);
             $('.app-detail-article .description').html(`<p>${todo_desc}</p>`);
             if (todo_is_completed == "True") {
                 $('.app-detail-action-right .is-completed').addClass('btn-success').find('span').text('Completed');
@@ -2791,6 +2774,33 @@
                 // search and show
 
                 $('.member-list-item:contains("'+text+'")').removeClass("search-hide");
+        });
+
+    // edit todo
+    $('.edit-todo-btn').click(function(){
+            var target_id =$(this).attr('edit-target-id');
+            var target_element = $(`[todo-id="${target_id}"]`)
+            var target= $(this).attr('data-target');
+            var deadline_date= target_element.attr('todo-deadline-date');
+            var deadline_time= target_element.attr('todo-deadline-time');
+            var todo_title= target_element.attr('todo-title');
+            var todo_created_date= target_element.attr('todo-created-date');
+            var todo_desc= target_element.attr('todo-desc');
+            var todo_tags= target_element.attr('todo-tags');
+            var todo_is_completed= target_element.attr('todo-iscompleted');
+            
+            $(target).find('textarea[name="todo_description"]').text(todo_desc);
+            $(target).find('input[name="todo_title"]').val(todo_title);
+            $(target).find('input[name="todo_deadline"]').val(deadline_date);
+            $(target).find('input[name="todo_time"]').val(deadline_time);
+
+            // if (todo_is_completed == "True") {
+            //     $('.app-detail-action-right .is-completed').addClass('btn-success').find('span').text('Completed');
+                
+            // } else{
+
+            //     $('.app-detail-action-right .is-completed').addClass('btn-danger').find('span').text('Not Completed')
+            // }
         });
 
 </script>

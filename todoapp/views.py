@@ -48,6 +48,7 @@ def profile_data(request):
     
     load_connection(request)    
     load_todo(request)
+    
     try:
         pr=profile_pic.objects.get(Master=master)
         show_pic(request)
@@ -225,6 +226,13 @@ def create_todo(request):
     load_todo(request)
     return redirect(profile)
 
+
+# remove todo
+
+def remove_todo(request,pk):
+    ToDo.objects.get(id=pk).delete()
+    return redirect(profile)
+    
 # load Todo and members
 
 def load_members(request):
@@ -232,13 +240,42 @@ def load_members(request):
     todo= ToDo.objects.get(Master=master)
     todo_members=ToDoMember.objects.filter(ToDo=todo)
     default_data['todo_members']=todo_members
+    
+
+# name shortner
+def shortner(obj):
+    obj = obj.split()
+    if len(obj) > 1:
+        print("data: ", obj)
+        return f"{obj[0][0]}{obj[1][0]}"
+    else:
+        return f"{obj[0][0]}"
 
 # load todo
 
 def load_todo(request):
     master= Master.objects.get(Email=request.session['email'])
     my_todo= ToDo.objects.filter(master=master)
-    default_data['my_todo']=my_todo
+
+    default_data['my_todo']=[]
+
+    for i in my_todo:
+        i.Date= i.Deadline.strftime("%m/%d/%Y")
+        i.Time= i.Deadline.strftime("%X")[:-3]
+        members = ToDoMember.objects.filter(todo = i)
+
+        for m in members:
+            m.Profile.SortName = shortner(m.Profile.FullName)
+
+        default_data['my_todo'].append({
+            'todo':i,
+            'members':members,
+        })
+       
+    default_data['my_todo'] = default_data['my_todo'][::-1]
+    print(default_data['my_todo'])  
+    
+    # default_data['todo_members']=todo_members
 
 
 # ------------upload image-----------------------------------#

@@ -17,6 +17,7 @@ urlpatterns = [
     path('change_password/',change_password,name="change_password"),
     path('search_ref/',search_ref,name="search_ref"),
     path('create_todo/',create_todo,name="create_todo"), 
+    path('remove_todo/<int:pk>/',remove_todo,name="remove_todo"), 
     
     
     # upload profile pic
